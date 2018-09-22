@@ -11,8 +11,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.businessgroupmanger.admin.FunctionActivity;
 import com.example.businessgroupmanger.db.AccountDAO;
 import com.example.businessgroupmanger.tables.Account;
+import com.example.businessgroupmanger.user.AllGoodsActivity;
 
 public class LoginActivity extends Activity {
     private SharedPreferences pref;
@@ -76,7 +78,14 @@ public class LoginActivity extends Activity {
         }else if (!account.getPassword().equals(password)){
             Toast.makeText(this,"密码错误!",Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(this,"登陆成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"登陆成功，欢迎"+username+"!",Toast.LENGTH_SHORT).show();
+            if (username.equals("admin")){
+                //进入管理员界面(职员变动、修改店铺信息、修改商品信息)
+                startActivity(new Intent(getApplicationContext(), FunctionActivity.class));
+            }else {
+                //进入用户界面(仅查看功能；显示所有商品(SALE表))
+                startActivity(new Intent(getApplicationContext(), AllGoodsActivity.class));
+            }
         }
 
         editor=pref.edit();
